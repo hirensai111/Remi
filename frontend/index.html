@@ -99,6 +99,10 @@
             padding: 3rem 1.25rem;
         }
 
+        .container.wide {
+            max-width: 1280px;
+        }
+
         /* Header */
         header {
             text-align: center;
@@ -293,11 +297,48 @@
             animation: fadeIn 0.5s;
         }
 
+        /* App layout: summary + chat side by side */
+        .app-layout {
+            display: flex;
+            gap: 1.25rem;
+            align-items: stretch;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .app-layout > .summary-card {
+            flex: 0 0 360px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-layout > .chat-section {
+            flex: 1;
+            height: 640px;
+        }
+
         /* Summary card */
         .summary-card {
             padding: 2rem;
-            margin-bottom: 1.25rem;
             animation: fadeInUp 0.6s ease-out;
+        }
+
+        .summary-card .summary-body {
+            overflow-y: auto;
+            flex: 1;
+            padding-right: 0.5rem;
+        }
+
+        .summary-card .summary-body::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .summary-card .summary-body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .summary-card .summary-body::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.08);
+            border-radius: var(--radius-pill);
         }
 
         .summary-card h2 {
@@ -346,7 +387,6 @@
         .chat-section {
             display: flex;
             flex-direction: column;
-            height: 520px;
             overflow: hidden;
             animation: fadeInUp 0.7s ease-out 0.1s both;
         }
@@ -506,9 +546,27 @@
         }
 
         /* Responsive */
+        @media (max-width: 900px) {
+            .app-layout {
+                flex-direction: column;
+            }
+            .app-layout > .summary-card {
+                flex: none;
+                width: 100%;
+                max-height: 360px;
+            }
+            .app-layout > .chat-section {
+                flex: none;
+                height: 480px;
+            }
+        }
+
         @media (max-width: 640px) {
             .container {
                 padding: 1.5rem 1rem;
+            }
+            .container.wide {
+                padding: 1.5rem 0.75rem;
             }
             header h1 {
                 font-size: 2rem;
@@ -567,17 +625,19 @@
                 <button class="new-doc-btn" id="new-doc-btn">New document</button>
             </div>
             <div class="truncate-warning hidden" id="truncate-warning"></div>
-            <div class="summary-card glass">
-                <h2>Summary</h2>
-                <div class="summary-body" id="summary-body"></div>
-                <div class="meta" id="summary-meta"></div>
-            </div>
+            <div class="app-layout">
+                <div class="summary-card glass">
+                    <h2>Summary</h2>
+                    <div class="summary-body" id="summary-body"></div>
+                    <div class="meta" id="summary-meta"></div>
+                </div>
 
-            <div class="chat-section glass">
-                <div class="messages" id="messages"></div>
-                <div class="input-area">
-                    <input type="text" id="question-input" placeholder="Ask a question about your document..." autocomplete="off">
-                    <button id="send-btn">Send</button>
+                <div class="chat-section glass">
+                    <div class="messages" id="messages"></div>
+                    <div class="input-area">
+                        <input type="text" id="question-input" placeholder="Ask a question about your document..." autocomplete="off">
+                        <button id="send-btn">Send</button>
+                    </div>
                 </div>
             </div>
             <div class="loading hidden" id="chat-loading">
@@ -681,6 +741,7 @@
 
                 uploadSection.classList.add("hidden");
                 appSection.classList.remove("hidden");
+                document.querySelector('.container').classList.add('wide');
                 questionInput.focus();
             } catch (err) {
                 alert(err.message);
@@ -701,6 +762,7 @@
             uploadSection.classList.remove("hidden");
             uploadZone.classList.remove("hidden");
             uploadLoading.classList.add("hidden");
+            document.querySelector('.container').classList.remove('wide');
             fileInput.value = "";
         });
 
