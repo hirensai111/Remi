@@ -697,7 +697,7 @@
     </div>
 
     <script>
-        const API_BASE = "http://localhost:8000";
+        const API_BASE = (window.location.hostname === "localhost" && window.location.port === "8080") ? "http://localhost:8000" : "";
         const VALID_EXTS = [".pdf", ".docx", ".pptx", ".txt", ".md"];
 
         const uploadZone = document.getElementById("upload-zone");
