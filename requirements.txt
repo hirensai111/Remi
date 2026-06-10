@@ -1,1 +1,10 @@
--r backend/requirements.txt
+fastapi
+uvicorn[standard]
+pymupdf
+httpx
+python-multipart
+python-docx
+python-pptx
+sentence-transformers
+numpy
+python-dotenv
