@@ -216,9 +216,3 @@ Remi/
 MIT
 
 ---
-
-<div align="center">
-
-Built with curiosity by **hirensai111**
-
-</div>
